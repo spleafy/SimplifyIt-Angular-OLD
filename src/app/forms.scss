@@ -1,0 +1,68 @@
+.form-box {
+  width: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  h1 {
+    font-size: 24pt;
+    font-family: "Gotham Bold";
+    text-align: center;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    font-family: "Gotham Regular" !important;
+
+    label {
+      color: rgba(0, 0, 0, 0.5);
+      margin-top: 10px;
+      font-family: inherit;
+    }
+
+    input {
+      padding: 10px 15px;
+      border: 1px solid #cdcfd3;
+      font-size: 15px;
+      margin: 10px 0;
+      border-radius: 10px;
+      color: #8c8e91;
+      font-family: inherit;
+    }
+
+    > div {
+      color: red;
+      font-family: inherit !important ;
+
+      div {
+        font-family: inherit;
+      }
+    }
+
+    button {
+      padding: 15px;
+      border-radius: 15px;
+      color: #fff;
+      font-size: 12pt;
+      background: linear-gradient(315deg, #df98fa, #9055ff);
+      width: 50%;
+      align-self: center;
+      margin-top: 20px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+  }
+
+  .redirect-link {
+    color: #000 !important;
+    margin-top: 40px;
+    font-family: "Gotham Light";
+
+    a {
+      font-family: inherit;
+    }
+  }
+}

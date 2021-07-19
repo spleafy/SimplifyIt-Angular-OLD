@@ -1,1 +1,73 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: "Gotham Light";
+  src: url("./assets/fonts/GothamPro-Light.ttf");
+}
+
+@font-face {
+  font-family: "Gotham Regular";
+  src: url("./assets/fonts/GothamPro.ttf");
+}
+
+@font-face {
+  font-family: "Gotham Italic";
+  src: url("./assets/fonts/GothamPro-Italic.ttf");
+}
+
+@font-face {
+  font-family: "Gotham Medium";
+  src: url("./assets/fonts/GothamPro-Medium.ttf");
+}
+
+@font-face {
+  font-family: "Gotham Bold";
+  src: url("./assets/fonts/GothamPro-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Gotham Black";
+  src: url("./assets/fonts/GothamPro-Black.ttf");
+}
+
+@font-face {
+  font-family: "Proxima Nova Light";
+  src: url("./assets/fonts/Proxima Nova Thin.otf");
+}
+
+@font-face {
+  font-family: "Proxima Nova Regular";
+  src: url("./assets/fonts/Proxima Nova Regular.otf");
+}
+
+@font-face {
+  font-family: "Proxima Nova Bold";
+  src: url("./assets/fonts/Proxima Nova Bold.otf");
+}
+
+@font-face {
+  font-family: "Proxima Nova Extra Bold";
+  src: url("./assets/fonts/Proxima Nova Extrabold.otf");
+}
+
+@font-face {
+  font-family: "Proxima Nova Black";
+  src: url("./assets/fonts/Proxima Nova Black.otf");
+}
+
+* {
+  font-family: "Proxima Nova Regular";
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input,
+button {
+  outline: none;
+  border: none;
+  border: none;
+  background: none;
+}
+
+a {
+  color: inherit;
+}

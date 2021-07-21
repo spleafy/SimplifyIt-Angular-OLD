@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormsService } from '../forms.service';
+import { Router } from '@angular/router';
+import { requestPrefix, User } from '../app.component';
 
 @Component({
   selector: 'et-login-page',
@@ -8,7 +10,11 @@ import { FormsService } from '../forms.service';
   styleUrls: ['../forms.scss'],
 })
 export class LoginPageComponent implements OnInit {
-  constructor(private fb: FormBuilder, private formService: FormsService) {}
+  constructor(
+    private fb: FormBuilder,
+    private formsService: FormsService,
+    private router: Router
+  ) {}
 
   loginForm: FormGroup;
 
@@ -35,15 +41,20 @@ export class LoginPageComponent implements OnInit {
   }
 
   checkEmailAvailability() {
-    return this.formService.checkEmailAvailability('login');
+    return this.formsService.checkEmailAvailability('login');
   }
 
-  loginFormSubmit() {
+  async loginFormSubmit() {
     this.loginForm.markAllAsTouched();
     if (this.loginForm.valid) {
-      console.log('valid');
-    } else {
-      console.log('invalid');
+      const result = await this.formsService.login(this.loginForm.value);
+      if (result == null) {
+        this.loginForm
+          .get('password')
+          .setErrors({ passwordInvalidForEmail: true });
+      } else {
+        this.router.navigate(['']);
+      }
     }
   }
 }

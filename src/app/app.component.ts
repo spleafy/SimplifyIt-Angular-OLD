@@ -7,3 +7,10 @@ import { Component } from '@angular/core';
 export class AppComponent {
   constructor() {}
 }
+export type User = {
+  name?: string;
+  email?: string;
+  password?: string;
+};
+
+export const requestPrefix: string = 'http://localhost/src/assets/php/';

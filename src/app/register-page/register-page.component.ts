@@ -1,29 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormsService } from '../forms.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-register-page',
+  selector: 'et-register-page',
   templateUrl: './register-page.component.html',
   styleUrls: ['../forms.scss'],
 })
 export class RegisterPageComponent implements OnInit {
-  constructor(private fb: FormBuilder, private formService: FormsService) {}
+  constructor(
+    private fb: FormBuilder,
+    private formsService: FormsService,
+    private router: Router
+  ) {}
 
   registerForm: FormGroup;
 
-  ngOnInit(): void {
+  async ngOnInit() {
     const emailRegex = '[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}';
     const nameRegex = /^[a-zA-Z ]+$/;
     this.registerForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern(nameRegex)]],
-      username: [
-        '',
-        {
-          validators: [Validators.required, Validators.minLength(8)],
-          asyncValidators: [this.checkUsernameAvailability(8)],
-        },
-      ],
       email: [
         '',
         {
@@ -32,16 +30,15 @@ export class RegisterPageComponent implements OnInit {
         },
       ],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      repassword: ['', [Validators.required, Validators.minLength(8)]],
     });
+  }
+
+  get form() {
+    return this.registerForm;
   }
 
   get name() {
     return this.registerForm.get('name');
-  }
-
-  get username() {
-    return this.registerForm.get('username');
   }
 
   get email() {
@@ -52,29 +49,20 @@ export class RegisterPageComponent implements OnInit {
     return this.registerForm.get('password');
   }
 
-  get repassword() {
-    return this.registerForm.get('repassword');
-  }
-
   checkEmailAvailability() {
-    return this.formService.checkEmailAvailability('register');
+    return this.formsService.checkEmailAvailability('register');
   }
 
-  checkUsernameAvailability(minlength: number) {
-    return this.formService.checkUsernameAvailability(minlength);
-  }
-
-  comparePasswords(password: string) {
-    return this.formService.comparePasswords(password);
-  }
-
-  registerFormSubmit() {
+  async registerFormSubmit() {
     this.registerForm.markAllAsTouched();
 
     if (this.registerForm.valid) {
-      console.log('valid');
-    } else {
-      console.log('invalid');
+      const result = await this.formsService.register(this.registerForm.value);
+      if (result == '') {
+        this.router.navigate(['']);
+      } else {
+        console.error(result);
+      }
     }
   }
 }

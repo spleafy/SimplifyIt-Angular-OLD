@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 import { of } from 'rxjs';
-import { StringDecoder } from 'string_decoder';
+import { User } from './app.component';
+import { requestPrefix } from './app.component';
 
 @Injectable({
   providedIn: 'root',
@@ -27,10 +28,7 @@ export class FormsService {
                 .set('validateEmail', 'validateEmail')
                 .set('email', control.value.toLowerCase());
               this.http
-                .get(
-                  'http://localhost/Projects%20Under%20Development/EasifyIt/src/assets/php/actions.php',
-                  { params }
-                )
+                .get(requestPrefix + 'actions.php', { params })
                 .subscribe((data) => {
                   if (caller == 'login') {
                     resolve(data ? null : { emailNotRegistered: true });
@@ -49,46 +47,41 @@ export class FormsService {
     };
   }
 
-  checkUsernameTimeout = null;
-
-  checkUsernameAvailability(minlength: number) {
-    return (control: AbstractControl) => {
-      if (control.value.length > minlength) {
-        return new Promise((resolve, reject) => {
-          try {
-            if (this.checkUsernameTimeout != null) {
-              clearTimeout(this.checkUsernameTimeout);
-            }
-            this.checkUsernameTimeout = setTimeout(() => {
-              const params = new HttpParams()
-                .set('validateUsername', 'validateUsername')
-                .set('username', control.value.toLowerCase());
-              this.http
-                .get(
-                  'http://localhost/Projects%20Under%20Development/EasifyIt/src/assets/php/actions.php',
-                  { params }
-                )
-                .subscribe((data) => {
-                  resolve(data ? { usernameRegistered: true } : null);
-                });
-            }, 500);
-          } catch (err) {
-            reject(err);
-          }
-        });
+  login(user: User) {
+    return new Promise((resolve, reject) => {
+      try {
+        const params = new HttpParams()
+          .set('loginUser', 'loginUser')
+          .set('user_email', user.email)
+          .set('user_password', user.password);
+        this.http
+          .get(requestPrefix + 'actions.php', { params })
+          .subscribe((data) => {
+            console.log(data);
+            resolve(data);
+          });
+      } catch (err) {
+        reject(err);
       }
-
-      return of(null);
-    };
+    });
   }
 
-  comparePasswords(password: any) {
-    return (control: AbstractControl) => {
-      return new Promise((resolve, reject) => {
-        control.value == password
-          ? resolve(null)
-          : resolve({ passwordsAreDifferent: true });
-      });
-    };
+  register(user: User) {
+    return new Promise((resolve, reject) => {
+      try {
+        const params = new HttpParams()
+          .set('registerUser', 'registerUser')
+          .set('user_name', user.name)
+          .set('user_email', user.email)
+          .set('user_password', user.password);
+        this.http
+          .get(requestPrefix + 'actions.php', { params })
+          .subscribe((data) => {
+            resolve(data);
+          });
+      } catch (err) {
+        reject(err);
+      }
+    });
   }
 }

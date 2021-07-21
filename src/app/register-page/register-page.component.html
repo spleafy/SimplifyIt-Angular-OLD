@@ -1,35 +1,19 @@
 <div class="form-box">
   <et-content-box>
     <div [ngStyle]="{ padding: '40px' }">
-      <h1>Yupee 🎉</h1>
+      <h1>Yupee! 🎉</h1>
       <form
         action=""
         [formGroup]="registerForm"
         autocomplete="off"
         (ngSubmit)="registerFormSubmit()"
+        novalidate
       >
         <label for="name">Name: </label>
         <input type="text" id="name" formControlName="name" />
         <div [hidden]="name.valid || name.untouched">
           <div *ngIf="name.errors?.required">This field is required!</div>
           <div *ngIf="name.errors?.pattern">This is not a valid name!</div>
-        </div>
-        <label for="username">Username: </label>
-        <input
-          type="text"
-          id="username"
-          formControlName="username"
-          maxlength="255"
-        />
-        <div [hidden]="username.valid || username.untouched">
-          <div *ngIf="username.errors?.required">This field is required!</div>
-          <div *ngIf="username.errors?.minlength">
-            Username must be 8 characters or longer!
-          </div>
-          <div *ngIf="username.errors?.usernameRegistered">
-            This username is already registered!
-          </div>
-          <div *ngIf="username.pending">wait...</div>
         </div>
         <label for="email">Email: </label>
         <input
@@ -52,17 +36,6 @@
           <div *ngIf="password.errors?.required">This field is required!</div>
           <div *ngIf="password.errors?.minlength">
             Password must be 8 characters or longer!
-          </div>
-        </div>
-        <label for="repassword">Repeat Password: </label>
-        <input type="password" id="repassword" formControlName="repassword" />
-        <div [hidden]="repassword.valid || repassword.untouched">
-          <div *ngIf="repassword.errors?.required">This field is required!</div>
-          <div *ngIf="repassword.errors?.minlength">
-            Password must be 8 characters or longer!
-          </div>
-          <div *ngIf="repassword.errors?.passwordsAreDifferent">
-            Password don't match!
           </div>
         </div>
         <button>Register</button>

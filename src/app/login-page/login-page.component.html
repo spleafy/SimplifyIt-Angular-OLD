@@ -1,7 +1,7 @@
 <div class="form-box">
   <et-content-box>
     <div [ngStyle]="{ padding: '40px' }">
-      <h1>Welcome Back</h1>
+      <h1>Welcome Back!</h1>
       <form
         action=""
         [formGroup]="loginForm"
@@ -29,6 +29,9 @@
           <div *ngIf="password.errors?.required">This field is required!</div>
           <div *ngIf="password.errors?.minlength">
             Password must be 8 characters or longer!
+          </div>
+          <div *ngIf="password.errors?.passwordInvalidForEmail">
+            Password is invalid for this email!
           </div>
         </div>
         <button>Login</button>

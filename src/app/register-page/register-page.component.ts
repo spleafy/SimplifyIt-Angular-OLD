@@ -4,7 +4,7 @@ import { FormsService } from '../forms.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'et-register-page',
+  selector: 'si-register-page',
   templateUrl: './register-page.component.html',
   styleUrls: ['../forms.scss'],
 })

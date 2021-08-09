@@ -13,4 +13,4 @@ export type User = {
   password?: string;
 };
 
-export const requestPrefix: string = 'http://localhost/src/assets/php/';
+export const requestPrefix: string = 'http://localhost:4000/';

@@ -11,12 +11,17 @@ import { requestPrefix } from './app.component';
 export class FormsService {
   constructor(private http: HttpClient) {}
 
+  // Email Request Timeout Variable
   checkEmailTimeout = null;
 
+  // Function To Check Email Availability
   checkEmailAvailability(caller: string) {
     return (control: AbstractControl) => {
+      // Email Regex Variable
       const re =
         /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+      // Sending The Request Only If The Email Is Valid By Regex
       if (re.test(control.value)) {
         return new Promise((resolve, reject) => {
           try {
@@ -24,18 +29,20 @@ export class FormsService {
               clearTimeout(this.checkEmailTimeout);
             }
             this.checkEmailTimeout = setTimeout(() => {
+              // Request Params
               const params = new HttpParams()
-                .set('validateEmail', 'validateEmail')
-                .set('email', control.value.toLowerCase());
-              this.http
-                .get(requestPrefix + 'actions.php', { params })
-                .subscribe((data) => {
-                  if (caller == 'login') {
-                    resolve(data ? null : { emailNotRegistered: true });
-                  } else {
-                    resolve(data ? { emailRegistered: true } : null);
-                  }
-                });
+                .set('q', 'validateEmail')
+                .set('userEmail', control.value.toLowerCase());
+              // Making The Request To The Backend
+              this.http.get(requestPrefix, { params }).subscribe((data) => {
+                console.log(data);
+                // Making The Function Work For Login & Register
+                if (caller == 'login') {
+                  resolve(data ? null : { emailNotRegistered: true });
+                } else {
+                  resolve(data ? { emailRegistered: true } : null);
+                }
+              });
             }, 500);
           } catch (err) {
             reject(err);
@@ -50,16 +57,15 @@ export class FormsService {
   login(user: User) {
     return new Promise((resolve, reject) => {
       try {
+        // Request Params
         const params = new HttpParams()
-          .set('loginUser', 'loginUser')
-          .set('user_email', user.email)
-          .set('user_password', user.password);
-        this.http
-          .get(requestPrefix + 'actions.php', { params })
-          .subscribe((data) => {
-            console.log(data);
-            resolve(data);
-          });
+          .set('q', 'loginUser')
+          .set('userEmail', user.email)
+          .set('userPassword', user.password);
+        // Making The Request To The Backend
+        this.http.get(requestPrefix, { params }).subscribe((data) => {
+          resolve(data);
+        });
       } catch (err) {
         reject(err);
       }
@@ -69,16 +75,16 @@ export class FormsService {
   register(user: User) {
     return new Promise((resolve, reject) => {
       try {
+        // Request Params
         const params = new HttpParams()
-          .set('registerUser', 'registerUser')
-          .set('user_name', user.name)
-          .set('user_email', user.email)
-          .set('user_password', user.password);
-        this.http
-          .get(requestPrefix + 'actions.php', { params })
-          .subscribe((data) => {
-            resolve(data);
-          });
+          .set('q', 'registerUser')
+          .set('userName', user.name)
+          .set('userEmail', user.email)
+          .set('userPassword', user.password);
+        // Making The Request To The Backend
+        this.http.get(requestPrefix, { params }).subscribe((data) => {
+          resolve(data);
+        });
       } catch (err) {
         reject(err);
       }

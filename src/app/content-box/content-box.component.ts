@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'et-content-box',
+  selector: 'si-content-box',
   templateUrl: './content-box.component.html',
   styleUrls: ['./content-box.component.scss'],
 })

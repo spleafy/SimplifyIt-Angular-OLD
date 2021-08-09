@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormsService } from '../forms.service';
 
 @Component({
-  selector: 'et-home-page',
+  selector: 'si-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
 })

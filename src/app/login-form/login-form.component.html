@@ -1,13 +1,14 @@
 <div class="form-box">
-  <si-content-box>
-    <div [ngStyle]="{ padding: '40px' }">
-      <h1>Welcome Back!</h1>
-      <form
-        action=""
-        [formGroup]="loginForm"
-        autocomplete="off"
-        (ngSubmit)="loginFormSubmit()"
-      >
+  <div [ngStyle]="{ padding: '40px' }">
+    <span>Welcome Back 😉! Please, login to your account.</span>
+    <form
+      action=""
+      [formGroup]="loginForm"
+      autocomplete="off"
+      (ngSubmit)="loginFormSubmit()"
+      enctype="multipart/form-data"
+    >
+      <div class="input-group">
         <label for="email">Email: </label>
         <input
           type="email"
@@ -23,6 +24,8 @@
           </div>
           <div *ngIf="email.pending">wait...</div>
         </div>
+      </div>
+      <div class="input-group">
         <label for="password">Password: </label>
         <input type="password" id="password" formControlName="password" />
         <div [hidden]="password.valid || password.untouched">
@@ -34,14 +37,24 @@
             Password is invalid for this email!
           </div>
         </div>
-        <button>Login</button>
-      </form>
-      <div class="redirect-link">
-        Haven't got an account?
-        <a [routerLink]="['/register']" routerLinkActive="router-link-active"
-          >Register now</a
+      </div>
+      <div class="form__actions">
+        <span
+          [routerLink]="['../account-recovery']"
+          routerLinkActive="router-link-active"
+          >Trouble logging in?</span
         >
       </div>
-    </div>
-  </si-content-box>
+      <div class="form__buttons">
+        <button class="active-button">Login</button>
+        <button
+          class="secondary-button"
+          [routerLink]="['../register']"
+          routerLinkActive="router-link-active"
+        >
+          Register
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

@@ -1,0 +1,40 @@
+<div class="form-box">
+  <div [ngStyle]="{ padding: '40px' }">
+    <span>Recover Account 🤞</span>
+    <form
+      action=""
+      autocomplete="off"
+      enctype="multipart/form-data"
+      [formGroup]="forgotForm"
+      (ngSubmit)="forgotFormSubmit()"
+    >
+      <div class="input-group">
+        <label for="email">Email: </label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          maxlength="255"
+        />
+        <div [hidden]="email.valid || email.untouched">
+          <div *ngIf="email.errors?.required">This field is required!</div>
+          <div *ngIf="email.errors?.pattern">This email is incorrect!</div>
+          <div *ngIf="email.errors?.emailNotRegistered">
+            This email is not registered!
+          </div>
+          <div *ngIf="email.pending">wait...</div>
+        </div>
+      </div>
+      <div class="form__buttons">
+        <button class="active-button">Send me the link</button>
+        <button
+          class="secondary-button"
+          [routerLink]="['../login']"
+          routerLinkActive="router-link-active"
+        >
+          Login
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

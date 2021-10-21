@@ -5,20 +5,22 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginPageComponent } from './login-page/login-page.component';
-import { ContentBoxComponent } from './content-box/content-box.component';
-import { RegisterPageComponent } from './register-page/register-page.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
-import { HomePageComponent } from './home-page/home-page.component';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { RegisterFormComponent } from './register-form/register-form.component';
+import { AccountsPageComponent } from './accounts-page/accounts-page.component';
+import { ApplicationPageComponent } from './application-page/application-page.component';
+import { ForgotFormComponent } from './forgot-form/forgot-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginPageComponent,
-    ContentBoxComponent,
-    RegisterPageComponent,
     NotFoundPageComponent,
-    HomePageComponent,
+    LoginFormComponent,
+    RegisterFormComponent,
+    AccountsPageComponent,
+    ApplicationPageComponent,
+    ForgotFormComponent,
   ],
   imports: [
     BrowserModule,

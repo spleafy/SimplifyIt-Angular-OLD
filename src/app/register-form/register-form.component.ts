@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormsService } from '../forms.service';
 import { Router } from '@angular/router';
+import { responseMessage } from '../app.component';
 
 @Component({
-  selector: 'si-register-page',
-  templateUrl: './register-page.component.html',
+  selector: 'si-register-form',
+  templateUrl: './register-form.component.html',
   styleUrls: ['../forms.scss'],
 })
-export class RegisterPageComponent implements OnInit {
+export class RegisterFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private formsService: FormsService,
@@ -20,8 +21,21 @@ export class RegisterPageComponent implements OnInit {
   async ngOnInit() {
     const emailRegex = '[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}';
     const nameRegex = /^[a-zA-Z ]+$/;
+    const usernameRegex = '^[a-zA-Z0-9_]*$';
     this.registerForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern(nameRegex)]],
+      username: [
+        '',
+        {
+          validators: [
+            Validators.required,
+            Validators.minLength(4),
+            Validators.maxLength(16),
+            Validators.pattern(usernameRegex),
+          ],
+          asyncValidators: [this.checkUsernameAvailability()],
+        },
+      ],
       email: [
         '',
         {
@@ -30,6 +44,12 @@ export class RegisterPageComponent implements OnInit {
         },
       ],
       password: ['', [Validators.required, Validators.minLength(8)]],
+      repassword: [
+        '',
+        {
+          validators: [Validators.required, Validators.minLength(8)],
+        },
+      ],
     });
   }
 
@@ -41,6 +61,10 @@ export class RegisterPageComponent implements OnInit {
     return this.registerForm.get('name');
   }
 
+  get username() {
+    return this.registerForm.get('username');
+  }
+
   get email() {
     return this.registerForm.get('email');
   }
@@ -49,16 +73,30 @@ export class RegisterPageComponent implements OnInit {
     return this.registerForm.get('password');
   }
 
+  get repassword() {
+    return this.registerForm.get('repassword');
+  }
+
   checkEmailAvailability() {
     return this.formsService.checkEmailAvailability('register');
+  }
+
+  checkUsernameAvailability() {
+    return this.formsService.checkUsernameAvailability();
   }
 
   async registerFormSubmit() {
     this.registerForm.markAllAsTouched();
 
     if (this.registerForm.valid) {
-      const result = await this.formsService.register(this.registerForm.value);
-      if (result == '') {
+      const result: responseMessage = await this.formsService.register(
+        this.registerForm.value
+      );
+      if (result.data.successfull) {
+        localStorage.setItem(
+          'token',
+          JSON.stringify('Bearer ' + result.data.token)
+        );
         this.router.navigate(['']);
       } else {
         console.error(result);

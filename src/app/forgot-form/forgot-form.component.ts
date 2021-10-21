@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FormsService } from '../forms.service';
 import { Router } from '@angular/router';
-import { requestPrefix, User } from '../app.component';
+import { responseMessage } from '../app.component';
+import { FormsService } from '../forms.service';
 
 @Component({
-  selector: 'si-login-page',
-  templateUrl: './login-page.component.html',
+  selector: 'si-forgot-form',
+  templateUrl: './forgot-form.component.html',
   styleUrls: ['../forms.scss'],
 })
-export class LoginPageComponent implements OnInit {
+export class ForgotFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private formsService: FormsService,
     private router: Router
   ) {}
 
-  loginForm: FormGroup;
+  forgotForm: FormGroup;
 
   ngOnInit(): void {
     const emailRegex = '[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}';
-    this.loginForm = this.fb.group({
+    this.forgotForm = this.fb.group({
       email: [
         '',
         {
@@ -28,18 +28,11 @@ export class LoginPageComponent implements OnInit {
           asyncValidators: [this.checkEmailAvailability()],
         },
       ],
-      password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
 
-  // Getter Functions For Easier Accessibility Throught The Template
-
   get email() {
-    return this.loginForm.get('email');
-  }
-
-  get password() {
-    return this.loginForm.get('password');
+    return this.forgotForm.get('email');
   }
 
   checkEmailAvailability() {
@@ -48,15 +41,17 @@ export class LoginPageComponent implements OnInit {
 
   // Form Submit Function
 
-  async loginFormSubmit() {
+  async forgotFormSubmit() {
     // Marking All Inputs As Touched So Errors Will Show
-    this.loginForm.markAllAsTouched();
+    this.forgotForm.markAllAsTouched();
     // Checking If Login Was Successfull Only If The Form Is Valid
-    if (this.loginForm.valid) {
-      const result = await this.formsService.login(this.loginForm.value);
+    if (this.forgotForm.valid) {
+      const result: responseMessage = await this.formsService.sendEmail(
+        this.forgotForm.value
+      );
 
-      if (result == null) {
-        this.loginForm
+      if (!result.data.successfull) {
+        this.forgotForm
           .get('password')
           .setErrors({ passwordInvalidForEmail: true });
       } else {

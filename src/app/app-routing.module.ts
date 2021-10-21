@@ -1,15 +1,32 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LoginPageComponent } from './login-page/login-page.component';
-import { RegisterPageComponent } from './register-page/register-page.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
-import { HomePageComponent } from './home-page/home-page.component';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { RegisterFormComponent } from './register-form/register-form.component';
+import { ApplicationPageComponent } from './application-page/application-page.component';
+import { AccountsPageComponent } from './accounts-page/accounts-page.component';
+import { ForgotFormComponent } from './forgot-form/forgot-form.component';
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent },
-  { path: 'login', component: LoginPageComponent, pathMatch: 'full' },
-  { path: 'register', component: RegisterPageComponent, pathMatch: 'full' },
+  {
+    path: 'accounts',
+    component: AccountsPageComponent,
+    children: [
+      {
+        path: 'login',
+        component: LoginFormComponent,
+        pathMatch: 'full',
+      },
+      { path: 'register', component: RegisterFormComponent, pathMatch: 'full' },
+      {
+        path: 'account-recovery',
+        component: ForgotFormComponent,
+        pathMatch: 'full',
+      },
+    ],
+  },
+  { path: 'app', component: ApplicationPageComponent, children: [] },
   { path: '**', component: NotFoundPageComponent },
 ];
 

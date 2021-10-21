@@ -9,8 +9,16 @@ export class AppComponent {
 }
 export type User = {
   name?: string;
+  username?: string;
   email?: string;
   password?: string;
+  repassword?: string;
+};
+
+export type responseMessage = {
+  status?: number;
+  data?: any;
+  err?: string;
 };
 
 export const requestPrefix: string = 'http://localhost:4000/';

@@ -4,6 +4,7 @@ import { AbstractControl } from '@angular/forms';
 import { of } from 'rxjs';
 import { User } from './app.component';
 import { requestPrefix } from './app.component';
+import { responseMessage } from './app.component';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +12,16 @@ import { requestPrefix } from './app.component';
 export class FormsService {
   constructor(private http: HttpClient) {}
 
+  createFormData = (obj: any) => {
+    const formData = new FormData();
+    Object.keys(obj).forEach((key) => {
+      formData.append(key, obj[key]);
+    });
+    return formData;
+  };
+
   // Email Request Timeout Variable
-  checkEmailTimeout = null;
+  requestTimeout = null;
 
   // Function To Check Email Availability
   checkEmailAvailability(caller: string) {
@@ -25,24 +34,75 @@ export class FormsService {
       if (re.test(control.value)) {
         return new Promise((resolve, reject) => {
           try {
-            if (this.checkEmailTimeout != null) {
-              clearTimeout(this.checkEmailTimeout);
+            if (this.requestTimeout != null) {
+              clearTimeout(this.requestTimeout);
             }
-            this.checkEmailTimeout = setTimeout(() => {
+            this.requestTimeout = setTimeout(() => {
               // Request Params
-              const params = new HttpParams()
-                .set('q', 'validateEmail')
-                .set('userEmail', control.value.toLowerCase());
+              const params = new HttpParams().set(
+                'userEmail',
+                control.value.toLowerCase()
+              );
               // Making The Request To The Backend
-              this.http.get(requestPrefix, { params }).subscribe((data) => {
-                console.log(data);
-                // Making The Function Work For Login & Register
-                if (caller == 'login') {
-                  resolve(data ? null : { emailNotRegistered: true });
-                } else {
-                  resolve(data ? { emailRegistered: true } : null);
-                }
-              });
+              this.http
+                .get(requestPrefix + 'api/user/verifyEmail', { params })
+                .subscribe((data?: responseMessage) => {
+                  // Making The Function Work For Login & Register
+                  if (caller == 'login') {
+                    resolve(
+                      data.data?.registered
+                        ? null
+                        : { emailNotRegistered: true }
+                    );
+                  } else {
+                    resolve(
+                      data.data?.registered ? { emailRegistered: true } : null
+                    );
+                  }
+                });
+            }, 500);
+          } catch (err) {
+            reject(err);
+          }
+        });
+      }
+
+      return of(null);
+    };
+  }
+
+  // Check Username Availability
+  checkUsernameAvailability() {
+    return (control: AbstractControl) => {
+      // Email Regex Variable
+      const re = /^[a-zA-Z0-9_]*$/;
+
+      // Sending The Request Only If The Email Is Valid By Regex
+      if (
+        re.test(control.value) &&
+        control.value.length >= 4 &&
+        control.value.length <= 25
+      ) {
+        return new Promise((resolve, reject) => {
+          try {
+            if (this.requestTimeout != null) {
+              clearTimeout(this.requestTimeout);
+            }
+
+            this.requestTimeout = setTimeout(() => {
+              // Request Params
+              const params = new HttpParams().set(
+                'userUsername',
+                control.value.toLowerCase()
+              );
+              // Making The Request To The Backend
+              this.http
+                .get(requestPrefix + 'api/user/verifyUsername', { params })
+                .subscribe((data?: responseMessage) => {
+                  resolve(
+                    data.data.registered ? { usernameRegistered: true } : null
+                  );
+                });
             }, 500);
           } catch (err) {
             reject(err);
@@ -57,15 +117,14 @@ export class FormsService {
   login(user: User) {
     return new Promise((resolve, reject) => {
       try {
-        // Request Params
-        const params = new HttpParams()
-          .set('q', 'loginUser')
-          .set('userEmail', user.email)
-          .set('userPassword', user.password);
+        const requestBody = this.createFormData(user);
+
         // Making The Request To The Backend
-        this.http.get(requestPrefix, { params }).subscribe((data) => {
-          resolve(data);
-        });
+        this.http
+          .post(requestPrefix + 'api/user/login', requestBody)
+          .subscribe((data) => {
+            resolve(data);
+          });
       } catch (err) {
         reject(err);
       }
@@ -75,16 +134,33 @@ export class FormsService {
   register(user: User) {
     return new Promise((resolve, reject) => {
       try {
-        // Request Params
-        const params = new HttpParams()
-          .set('q', 'registerUser')
-          .set('userName', user.name)
-          .set('userEmail', user.email)
-          .set('userPassword', user.password);
+        delete user.repassword;
+
+        const requestBody = this.createFormData(user);
+
         // Making The Request To The Backend
-        this.http.get(requestPrefix, { params }).subscribe((data) => {
-          resolve(data);
-        });
+        this.http
+          .post(requestPrefix + 'api/user/register', requestBody)
+          .subscribe((data?: responseMessage) => {
+            resolve(data);
+          });
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  sendEmail(email: String) {
+    return new Promise((resolve, reject) => {
+      try {
+        const requestBody = this.createFormData(email);
+
+        // Making the request to the backend
+        this.http
+          .post(requestPrefix + 'api/user/sendEmail', requestBody)
+          .subscribe((data?: responseMessage) => {
+            resolve(data);
+          });
       } catch (err) {
         reject(err);
       }

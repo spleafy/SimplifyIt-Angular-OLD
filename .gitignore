@@ -46,3 +46,6 @@ Thumbs.db
 
 # Environment File
 .env
+
+# Documentation Folder
+/documentation

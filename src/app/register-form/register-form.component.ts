@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormsService } from '../forms.service';
+import { AccountsService } from '../accounts.service';
 import { Router } from '@angular/router';
 import { responseMessage } from '../app.component';
 
@@ -13,6 +14,7 @@ export class RegisterFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private formsService: FormsService,
+    private accountsService: AccountsService,
     private router: Router
   ) {}
 
@@ -78,25 +80,29 @@ export class RegisterFormComponent implements OnInit {
   }
 
   checkEmailAvailability() {
-    return this.formsService.checkEmailAvailability('register');
+    return this.accountsService.checkEmailAvailability('register');
   }
 
   checkUsernameAvailability() {
-    return this.formsService.checkUsernameAvailability();
+    return this.accountsService.checkUsernameAvailability();
   }
 
   async registerFormSubmit() {
+    // Marking All Inputs As Touched
     this.registerForm.markAllAsTouched();
 
     if (this.registerForm.valid) {
+      // If The Form Is Valid, Send The Register Request
       const result: responseMessage = await this.formsService.register(
         this.registerForm.value
       );
-      if (result.data.successfull) {
+      if (result.data.successful) {
+        // If The Register Was successful, Then Set The Token To The Local Storage
         localStorage.setItem(
           'token',
           JSON.stringify('Bearer ' + result.data.token)
         );
+        // Navigate To The Root Component
         this.router.navigate(['']);
       } else {
         console.error(result);

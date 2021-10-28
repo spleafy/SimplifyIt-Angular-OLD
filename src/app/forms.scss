@@ -1,13 +1,19 @@
 .form-box {
-  width: 630px;
+  max-width: 630px;
+  display: flex;
 
+  h1,
   span {
     font-size: 20pt;
     font-family: "Satoshi Medium";
+    font-weight: unset;
     color: #999a9b;
+    text-align: center;
+    margin: 0 auto;
   }
 
   form {
+    flex-basis: 630px;
     display: flex;
     flex-direction: column;
     margin-top: 20px;
@@ -45,25 +51,10 @@
       }
     }
 
-    .form__actions {
-      margin-top: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      span {
-        color: #4f4f4f;
-        font-size: 12pt;
-        cursor: pointer;
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-
     .form__buttons {
-      margin-top: 20px;
+      margin: 40px 0;
+      display: flex;
+      justify-content: space-around;
 
       button {
         padding: 15px;
@@ -71,7 +62,6 @@
         color: #fff;
         font-size: 12pt;
         width: 30%;
-        margin-top: 20px;
         cursor: pointer;
         font-family: inherit;
         font-weight: bold;
@@ -89,6 +79,43 @@
           border: 2px solid #cdcfd3;
           color: #4f4f4f;
           margin-left: 30px;
+        }
+      }
+    }
+
+    .social__buttons {
+      .facebook__button {
+        background: #3b5998;
+      }
+
+      .google__button {
+        background: #c44129;
+        margin-left: 30px;
+      }
+    }
+
+    .slash {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      font-size: 18pt;
+      font-weight: bold;
+      color: #cdcfd3;
+    }
+
+    .form__actions {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        color: #4f4f4f;
+        font-size: 12pt;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
         }
       }
     }

@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
     }
     if (!user) {
       return res.json(
-        new ResponseMessage(400, { successfull: false }, "Invalid Credentials!")
+        new ResponseMessage(400, { successful: false }, "Invalid Credentials!")
       );
     }
     req.logIn(user, (err) => {
@@ -19,10 +19,8 @@ module.exports = (req, res, next) => {
         return next(err);
       }
 
-      console.log(user);
-
       const token = jwt.sign({ user }, process.env.TOKEN_SECRET);
-      return res.json(new ResponseMessage(200, { successfull: true, token }));
+      return res.json(new ResponseMessage(200, { successful: true, token }));
     });
   })(req, res, next);
 };

@@ -1,6 +1,6 @@
 <div class="form-box">
   <div [ngStyle]="{ padding: '40px' }">
-    <span>Welcome 👋! Fill the fields bellow, to register.</span>
+    <h1>Welcome 👋! Fill the fields bellow, to register.</h1>
     <form
       action=""
       [formGroup]="registerForm"
@@ -86,6 +86,11 @@
         >
           Login
         </button>
+      </div>
+      <div class="slash">\</div>
+      <div class="form__buttons social__buttons">
+        <button class="facebook__button">Facebook</button>
+        <button class="google__button">Google</button>
       </div>
     </form>
   </div>

@@ -1,6 +1,6 @@
 <div class="form-box">
   <div [ngStyle]="{ padding: '40px' }">
-    <span>Welcome Back 😉! Please, login to your account.</span>
+    <h1>Welcome Back 😉! Please, login to your account.</h1>
     <form
       action=""
       [formGroup]="loginForm"
@@ -38,13 +38,6 @@
           </div>
         </div>
       </div>
-      <div class="form__actions">
-        <span
-          [routerLink]="['../account-recovery']"
-          routerLinkActive="router-link-active"
-          >Trouble logging in?</span
-        >
-      </div>
       <div class="form__buttons">
         <button class="active-button">Login</button>
         <button
@@ -54,6 +47,18 @@
         >
           Register
         </button>
+      </div>
+      <div class="slash">\</div>
+      <div class="form__buttons social__buttons">
+        <button class="facebook__button">Facebook</button>
+        <button class="google__button">Google</button>
+      </div>
+      <div class="form__actions">
+        <span
+          [routerLink]="['../account-recovery']"
+          routerLinkActive="router-link-active"
+          >Trouble logging in?</span
+        >
       </div>
     </form>
   </div>

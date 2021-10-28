@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { responseMessage } from '../app.component';
 import { FormsService } from '../forms.service';
+import { AccountsService } from '../accounts.service';
 
 @Component({
   selector: 'si-forgot-form',
@@ -13,7 +14,8 @@ export class ForgotFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private formsService: FormsService,
-    private router: Router
+    private router: Router,
+    private accountsService: AccountsService
   ) {}
 
   forgotForm: FormGroup;
@@ -36,7 +38,7 @@ export class ForgotFormComponent implements OnInit {
   }
 
   checkEmailAvailability() {
-    return this.formsService.checkEmailAvailability('login');
+    return this.accountsService.checkEmailAvailability('login');
   }
 
   // Form Submit Function
@@ -44,13 +46,13 @@ export class ForgotFormComponent implements OnInit {
   async forgotFormSubmit() {
     // Marking All Inputs As Touched So Errors Will Show
     this.forgotForm.markAllAsTouched();
-    // Checking If Login Was Successfull Only If The Form Is Valid
+    // Checking If Login Was successful Only If The Form Is Valid
     if (this.forgotForm.valid) {
-      const result: responseMessage = await this.formsService.sendEmail(
+      const result: responseMessage = await this.accountsService.sendEmail(
         this.forgotForm.value
       );
 
-      if (!result.data.successfull) {
+      if (!result.data.successful) {
         this.forgotForm
           .get('password')
           .setErrors({ passwordInvalidForEmail: true });

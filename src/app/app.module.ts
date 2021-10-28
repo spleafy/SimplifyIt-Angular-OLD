@@ -11,6 +11,8 @@ import { RegisterFormComponent } from './register-form/register-form.component';
 import { AccountsPageComponent } from './accounts-page/accounts-page.component';
 import { ApplicationPageComponent } from './application-page/application-page.component';
 import { ForgotFormComponent } from './forgot-form/forgot-form.component';
+import { RootPageComponent } from './root-page/root-page.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { ForgotFormComponent } from './forgot-form/forgot-form.component';
     AccountsPageComponent,
     ApplicationPageComponent,
     ForgotFormComponent,
+    RootPageComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

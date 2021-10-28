@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormsService } from '../forms.service';
+import { AccountsService } from '../accounts.service';
 import { Router } from '@angular/router';
 import { responseMessage } from '../app.component';
 
@@ -13,6 +14,7 @@ export class LoginFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private formsService: FormsService,
+    private accountsService: AccountsService,
     private router: Router
   ) {}
 
@@ -43,7 +45,7 @@ export class LoginFormComponent implements OnInit {
   }
 
   checkEmailAvailability() {
-    return this.formsService.checkEmailAvailability('login');
+    return this.accountsService.checkEmailAvailability('login');
   }
 
   // Form Submit Function
@@ -51,21 +53,21 @@ export class LoginFormComponent implements OnInit {
   async loginFormSubmit() {
     // Marking All Inputs As Touched So Errors Will Show
     this.loginForm.markAllAsTouched();
-    // Checking If Login Was Successfull Only If The Form Is Valid
+    // Checking If Login Was successful Only If The Form Is Valid
     if (this.loginForm.valid) {
       const result: responseMessage = await this.formsService.login(
         this.loginForm.value
       );
 
-      if (!result.data.successfull) {
+      if (!result.data.successful) {
+        // If The Login Is Not successful, Set Form Field Error
         this.loginForm
           .get('password')
           .setErrors({ passwordInvalidForEmail: true });
       } else {
-        localStorage.setItem(
-          'token',
-          JSON.stringify('Bearer ' + result.data.token)
-        );
+        // If The Login Is successful, Set The Token To The Local Storage
+        localStorage.setItem('token', result.data.token);
+        // Navigate To The Root Page
         this.router.navigate(['']);
       }
     }

@@ -12,5 +12,16 @@
   .accounts-page__tips {
     width: 50%;
     background-color: blue;
+    transition: width 1s;
+  }
+}
+
+@media (max-width: 979px) {
+  .accounts-page__form {
+    width: 100% !important;
+  }
+
+  .accounts-page__tips {
+    display: none;
   }
 }

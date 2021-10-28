@@ -18,7 +18,7 @@ const verifyCallback = (username, password, done) => {
     }
 
     if (!(await bcrypt.compare(password, user.password))) {
-      return done(null, false, { message: "Dummy" });
+      return done(null, false);
     }
 
     return done(null, user);
@@ -34,6 +34,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((userId, done) => {
   User.findById(userId)
     .then((user) => {
+      console.log("user");
       done(null, user);
     })
     .catch((err) => done(err));

@@ -7,8 +7,10 @@ import { RegisterFormComponent } from './register-form/register-form.component';
 import { ApplicationPageComponent } from './application-page/application-page.component';
 import { AccountsPageComponent } from './accounts-page/accounts-page.component';
 import { ForgotFormComponent } from './forgot-form/forgot-form.component';
+import { RootPageComponent } from './root-page/root-page.component';
 
 const routes: Routes = [
+  { path: '', component: RootPageComponent },
   {
     path: 'accounts',
     component: AccountsPageComponent,

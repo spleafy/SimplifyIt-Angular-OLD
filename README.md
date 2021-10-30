@@ -8,6 +8,9 @@
 
 - **24/7** connection with your team.
 - **Chat, Talk, Video Call, Schedule Meetings**, We have it all.
+- Organize your work, like you never had. Remember, time is precious.
+- Work in teams, share documents, discuss, like you never had.
+- Import your files with our integration of the top platforms with just a few clicks.
 
 ## To run the project
 

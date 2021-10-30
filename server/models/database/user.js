@@ -21,6 +21,7 @@ const userSchema = mongoose.Schema({
     type: Date,
     required: true,
   },
+  workspaces: [String],
 });
 
 const User = mongoose.model("User", userSchema);

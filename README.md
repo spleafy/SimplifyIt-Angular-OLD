@@ -2,7 +2,7 @@
 
 ## What is SimplifyIt?
 
-SimplifyIt is simply a productivity social media app.
+SimplifyIt is _simply_ a productivity social media app.
 
 ## Features
 

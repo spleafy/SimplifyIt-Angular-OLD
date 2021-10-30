@@ -2,7 +2,7 @@
 
 ## What is SimplifyIt?
 
-SimplifyIt is a progressive web app, created with love and affection, coming to help the world.
+SimplifyIt is simply a productivity social media app.
 
 ## Features
 

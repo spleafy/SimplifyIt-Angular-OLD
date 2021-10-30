@@ -6,17 +6,13 @@
 
 ## Features
 
-- Being connected with your team
-- Integrated Chat
-- Integrated Video And Audio Calls
-- Scheduled Meetings
-- Push Notifications
-- Easy Integration with Google Docs, Sheets And Presentations
+- **24/7** connection with your team.
+- **Chat, Talk, Video Call, Schedule Meetings**, We have it all.
 
 ## To run the project
 
-- Git clone the repo
-- Create a .env file in server/config/, including a TOKEN_SECRET and a SESSION_SECRET
-- Run `npm install`
-- Run server.js in server/
-- Run `ng serve --port 3000 --open`
+- Git clone the repository.
+- Create a .env file in server/config/, including a TOKEN_SECRET and a SESSION_SECRET.
+- Run `npm install`.
+- Run server.js in server/.
+- Run `ng serve --port 3000 --open`.

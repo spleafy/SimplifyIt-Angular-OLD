@@ -1,6 +1,7 @@
 const User = require("../models/database/user");
 const bcrypt = require("bcrypt");
 const ResponseMessage = require("../models/responseMessage");
+const jwt = require("jsonwebtoken");
 
 module.exports = async (req, res) => {
   const requestData = req.body;

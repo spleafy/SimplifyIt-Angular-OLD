@@ -4,7 +4,9 @@ const WorkspaceSchema = new mongoose.Schema({
   administrators: [String],
   users: [String],
   name: String,
-  tasks: [String],
+  settings: {
+    allowUsersToCreate: Boolean,
+  },
 });
 
 const Workspace = mongoose.model("Workspace", WorkspaceSchema);

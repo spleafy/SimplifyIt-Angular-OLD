@@ -2,9 +2,14 @@ const mongoose = require("mongoose");
 
 const TaskSchema = new mongoose.Schema({
   workspace_id: String,
-  administrators: [String],
+  parent_id: String,
   name: String,
-  subtasks: [String],
+  description: String,
+  creator: String,
+  users: [String],
+  fromDate: Date,
+  dueDate: Date,
+  creationDate: Date,
 });
 
 const Task = mongoose.model("Task", TaskSchema);

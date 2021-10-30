@@ -50,6 +50,9 @@ const passportLogin = require("./api/passportLogin");
 const checkUserState = require("./api/checkUserState");
 const registerUser = require("./api/registerUser");
 const verifyEmail = require("./api/verifyEmail");
+const getWorkspaces = require("./api/getWorkspaces");
+const createWorkspace = require("./api/createWorkspace");
+const deleteWorkspace = require("./api/deleteWorkspace");
 
 app.get("/api/user/verifyEmail", verifyEmail);
 
@@ -60,5 +63,11 @@ app.post("/api/user/login", upload.none(), passportLogin);
 app.get("/api/user/checkUserState", verifyToken, checkUserState);
 
 app.post("/api/user/register", upload.none(), registerUser);
+
+app.get("/api/user/workspace", verifyToken, getWorkspaces);
+
+app.post("/api/user/workspace", verifyToken, createWorkspace);
+
+app.delete("/api/user/workspace/:workspaceId", verifyToken, deleteWorkspace);
 
 // ----------------------------------------------------------------------------------- //

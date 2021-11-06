@@ -1,0 +1,32 @@
+const Workspace = require("../../models/database/workspace");
+const ResponseMessage = require("../../models/responseMessage");
+
+module.exports = async (req, res) => {
+  const { workspaceId } = req.params;
+
+  if (req.body) {
+    const name = req.body.name;
+    const allowUsersToCreate = req.body.allowUsersToCreate;
+
+    const updatedWorkspace = await Workspace.findOneAndUpdate(
+      { _id: workspaceId, administrators: req.user.user._id },
+      {
+        $set: {
+          name,
+          settings: {
+            allowUsersToCreate,
+          },
+        },
+      },
+      {
+        returnOriginal: false,
+      }
+    );
+
+    res.json(new ResponseMessage(200, { updatedWorkspace }));
+  } else {
+    res.json(
+      new ResponseMessage(400, { updatedWorkspace: null }, "No parameters!")
+    );
+  }
+};

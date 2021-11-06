@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const ResponseMessage = require("../../models/responseMessage");
 
 require("dotenv").config();
 
@@ -14,13 +15,13 @@ module.exports = (req, res, next) => {
 
     jwt.verify(req.token, process.env.TOKEN_SECRET, (err, authData) => {
       if (err) {
-        res.sendStatus(403);
+        res.json(new ResponseMessage(403, { token: "invalid" }));
       } else {
         req.user = authData;
         next();
       }
     });
   } else {
-    res.sendStatus(403);
+    res.json(new ResponseMessage(403, { token: "invalid" }));
   }
 };

@@ -1,15 +1,34 @@
 const mongoose = require("mongoose");
 
 const TaskSchema = new mongoose.Schema({
-  workspace_id: String,
-  parent_id: String,
-  name: String,
+  workspaceId: {
+    type: String,
+    required: true,
+  },
+  parentId: String,
+  creator: {
+    type: String,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
   description: String,
-  creator: String,
-  users: [String],
+  users: {
+    type: [String],
+    required: true,
+  },
+  administrators: {
+    type: [String],
+    required: true,
+  },
   fromDate: Date,
   dueDate: Date,
-  creationDate: Date,
+  creationDate: {
+    type: Date,
+    required: true,
+  },
 });
 
 const Task = mongoose.model("Task", TaskSchema);

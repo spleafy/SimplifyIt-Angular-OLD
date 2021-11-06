@@ -1,5 +1,5 @@
-const User = require("../models/database/user");
-const ResponseMessage = require("../models/responseMessage");
+const User = require("../../models/database/user");
+const ResponseMessage = require("../../models/responseMessage");
 
 module.exports = async (req, res) => {
   const email = req.query.email;

@@ -1,6 +1,6 @@
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const ResponseMessage = require("../models/responseMessage");
+const ResponseMessage = require("../../models/responseMessage");
 
 require("dotenv").config();
 

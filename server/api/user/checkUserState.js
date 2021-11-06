@@ -1,4 +1,4 @@
-const ResponseMessage = require("../models/responseMessage");
+const ResponseMessage = require("../../models/responseMessage");
 
 module.exports = (req, res) => {
   const user = req.user;

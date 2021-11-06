@@ -1,6 +1,6 @@
-const User = require("../models/database/user");
+const User = require("../../models/database/user");
 
-const ResponseMessage = require("../models/responseMessage");
+const ResponseMessage = require("../../models/responseMessage");
 
 module.exports = async (req, res) => {
   const username = req.query.username;

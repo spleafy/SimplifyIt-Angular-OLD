@@ -1,10 +1,10 @@
-const Workspace = require("../models/database/workspace");
-const ResponseMessage = require("../models/responseMessage");
+const Workspace = require("../../models/database/workspace");
+const ResponseMessage = require("../../models/responseMessage");
 
 module.exports = async (req, res) => {
   const workspace = await Workspace({
-    administrators: [req.user.user.username],
-    users: [req.user.user.username],
+    administrators: [req.user.user._id],
+    users: [req.user.user._id],
     name: req.user.user.username + "'s workspace",
     settings: {
       allowUsersToCreate: false,

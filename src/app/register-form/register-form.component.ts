@@ -103,7 +103,7 @@ export class RegisterFormComponent implements OnInit {
           JSON.stringify('Bearer ' + result.data.token)
         );
         // Navigate To The Root Component
-        this.router.navigate(['']);
+        this.router.navigate(['/']);
       } else {
         console.error(result);
       }

@@ -17,6 +17,13 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  settings: {
+    profilePicturePath: String,
+    profileColor: {
+      type: String,
+      required: true,
+    },
+  },
   registrationDate: {
     type: Date,
     required: true,

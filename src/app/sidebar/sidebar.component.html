@@ -1,0 +1,44 @@
+<div class="si-sidebar" [ngClass]="{ 'si-sidebar_extended': extendedSidebar }">
+  <div class="si-sidebar__content">
+    <div class="si-sidebar__top-actions">
+      <div class="si-sidebar__account-box">
+        <div class="si-sidebar__account-profile-picture">
+          <img
+            src="{{ user.settings.profilePicturePath }}"
+            alt=""
+            *ngIf="user.settings.profilePicturePath"
+          />
+          <span
+            class="default-profile-picture"
+            *ngIf="!user.profilePicture"
+            [ngStyle]="{ 'background-color': user.settings.profileColor }"
+          >
+            {{ user.name[0] }}
+          </span>
+        </div>
+        <span>{{ user.name }}</span>
+      </div>
+      <div
+        class="si-sidebar__extend-button"
+        (click)="extendedSidebar = !extendedSidebar"
+      >
+        <img src="../../assets/icons/chevrons-right.svg" alt="" />
+      </div>
+    </div>
+    <div class="si-sidebar__toggles">
+      <div
+        class="si-sidebar__toggle"
+        [routerLink]="['./dashboard']"
+        routerLinkActive="router-link-active"
+      >
+        Dashboard
+      </div>
+      <div class="si-sidebar__toggle">Notifications</div>
+      <div class="si-sidebar__toggle">
+        Workspaces
+        <img src="../../assets/icons/chevron-right.svg" alt="" />
+      </div>
+    </div>
+    <div class="si-sidebar__bottom-actions">Logout</div>
+  </div>
+</div>

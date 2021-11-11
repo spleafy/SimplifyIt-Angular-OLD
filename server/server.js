@@ -6,7 +6,7 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const multer = require("multer");
 
-// App Config //
+// App Config
 
 const upload = multer();
 

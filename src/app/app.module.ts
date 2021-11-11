@@ -12,7 +12,8 @@ import { AccountsPageComponent } from './accounts-page/accounts-page.component';
 import { ApplicationPageComponent } from './application-page/application-page.component';
 import { ForgotFormComponent } from './forgot-form/forgot-form.component';
 import { RootPageComponent } from './root-page/root-page.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ApplicationPageComponent,
     ForgotFormComponent,
     RootPageComponent,
-    DashboardComponent,
+    SidebarComponent,
+    DashboardPageComponent,
   ],
   imports: [
     BrowserModule,

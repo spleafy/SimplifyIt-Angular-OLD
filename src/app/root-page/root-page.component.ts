@@ -17,7 +17,7 @@ export class RootPageComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     const response: responseMessage =
       await this.accountsService.checkUserState();
-    if (response == undefined) {
+    if (response.status == 403) {
       this.router.navigate(['/accounts/login']);
     } else {
       localStorage.setItem('user', JSON.stringify(response.data.user));

@@ -8,6 +8,7 @@ import { ApplicationPageComponent } from './application-page/application-page.co
 import { AccountsPageComponent } from './accounts-page/accounts-page.component';
 import { ForgotFormComponent } from './forgot-form/forgot-form.component';
 import { RootPageComponent } from './root-page/root-page.component';
+import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
 
 const routes: Routes = [
   { path: '', component: RootPageComponent },
@@ -28,7 +29,11 @@ const routes: Routes = [
       },
     ],
   },
-  { path: 'app', component: ApplicationPageComponent, children: [] },
+  {
+    path: 'app',
+    component: ApplicationPageComponent,
+    children: [{ path: 'dashboard', component: DashboardPageComponent }],
+  },
   { path: '**', component: NotFoundPageComponent },
 ];
 

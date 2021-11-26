@@ -1,6 +1,6 @@
-<div class="form-box">
-  <div [ngStyle]="{ padding: '40px' }">
-    <span>Recover Account 🤞</span>
+<div class="si-form-box">
+  <div [ngStyle]="{ padding: '70px' }">
+    <h1>Recover Account 🤞</h1>
     <form
       action=""
       autocomplete="off"
@@ -8,7 +8,7 @@
       [formGroup]="forgotForm"
       (ngSubmit)="forgotFormSubmit()"
     >
-      <div class="input-group">
+      <div class="si-input-group si-columns-2">
         <label for="email">Email: </label>
         <input
           type="email"
@@ -25,15 +25,12 @@
           <div *ngIf="email.pending">wait...</div>
         </div>
       </div>
-      <div class="form__buttons">
-        <button class="active-button">Send me the link</button>
-        <button
-          class="secondary-button"
-          [routerLink]="['../login']"
-          routerLinkActive="router-link-active"
-        >
-          Login
-        </button>
+      <button>Send me the link</button>
+      <div class="si-form-actions">
+        <div>
+          Already have an account?
+          <a [routerLink]="['../login']">Login Now</a>
+        </div>
       </div>
     </form>
   </div>

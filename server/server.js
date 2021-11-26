@@ -14,6 +14,8 @@ require("dotenv").config({
   path: "./config/.env",
 });
 
+const PORT = process.env.PORT || 4000;
+
 const app = express();
 
 app.use(cors());
@@ -38,7 +40,9 @@ mongoose.connect("mongodb://localhost:27017/SimplifyIt");
 
 const db = mongoose.connection;
 
-app.listen(4000);
+app.listen(PORT, () => {
+  console.log(`🚀 Server is listening on PORT: ${PORT}`);
+});
 
 // ----------------------------------------------------------------------------------- //
 
@@ -47,9 +51,10 @@ app.listen(4000);
 const verifyUsername = require("./api/user/verifyUsername");
 const verifyToken = require("./api/middleware/verifyToken");
 const passportLogin = require("./api/user/passportLogin");
-const checkUserState = require("./api/user/checkUserState");
+const getUserState = require("./api/user/getUserState");
 const registerUser = require("./api/user/registerUser");
 const verifyEmail = require("./api/user/verifyEmail");
+const getWorkspace = require("./api/workspace/getWorkspace");
 const getWorkspaces = require("./api/workspace/getWorkspaces");
 const createWorkspace = require("./api/workspace/createWorkspace");
 const deleteWorkspace = require("./api/workspace/deleteWorkspace");
@@ -69,7 +74,7 @@ app.get("/api/user/verifyEmail", verifyEmail);
 
 app.get("/api/user/verifyUsername", verifyUsername);
 
-app.get("/api/user/checkUserState", verifyToken, checkUserState);
+app.get("/api/user/getUserState", verifyToken, getUserState);
 
 app.post("/api/user/login", upload.none(), passportLogin);
 
@@ -78,6 +83,8 @@ app.post("/api/user/register", upload.none(), registerUser);
 app.get("/api/user/workspace", verifyToken, getWorkspaces);
 
 app.post("/api/user/workspace", verifyToken, createWorkspace);
+
+app.get("/api/user/workspace/:workspaceId", verifyToken, getWorkspace);
 
 app.delete("/api/user/workspace/:workspaceId", verifyToken, deleteWorkspace);
 

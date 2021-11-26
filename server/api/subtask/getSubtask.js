@@ -7,7 +7,11 @@ module.exports = async (req, res) => {
 
   res.json(
     new ResponseMessage(200, {
-      tasks: await Task.find({ workspaceId, parentId: taskId }),
+      subtasks: await Task.find({
+        workspaceId,
+        parentId: taskId,
+        users: req.user.user._id,
+      }),
     })
   );
 };

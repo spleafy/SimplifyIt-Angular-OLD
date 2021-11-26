@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AccountsPageComponent } from './accounts-page.component';
+import { SeparatorComponent } from './separator.component';
 
-describe('AccountsPageComponent', () => {
-  let component: AccountsPageComponent;
-  let fixture: ComponentFixture<AccountsPageComponent>;
+describe('SeparatorComponent', () => {
+  let component: SeparatorComponent;
+  let fixture: ComponentFixture<SeparatorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccountsPageComponent ]
+      declarations: [ SeparatorComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AccountsPageComponent);
+    fixture = TestBed.createComponent(SeparatorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

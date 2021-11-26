@@ -1,3 +1,6 @@
 .si-application-window {
   display: flex;
+  height: 100vh;
+  flex-direction: column;
+  // overflow-y: hidden
 }

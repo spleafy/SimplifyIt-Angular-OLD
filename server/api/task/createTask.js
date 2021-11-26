@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
       description: req.body.description,
       users: req.user.user._id,
       administrators: req.user.user._id,
-      fromDate: req.body.fromDate,
+      startingDate: req.body.startingDate,
       dueDate: req.body.dueDate,
       creationDate: new Date(),
     }).save();
@@ -26,13 +26,13 @@ module.exports = async (req, res) => {
 
   if (req.body) {
     // Check To See If There Are Parameters Provided
-    if (wokrspace) {
-      // Check To See If Wokrspace Exists
+    if (workspace) {
+      // Check To See If Workspace Exists
       if (workspace.settings.allowUsersToCreate) {
         // Check If The Workspace Setting Is True
         if (workspace.users.indexOf(req.user.user._id) > -1) {
           // Check If The User Is A User Of That Workspace
-          const task = createTask();
+          const task = await createTask();
 
           res.json(new ResponseMessage(200, { task }));
         } else {
@@ -40,7 +40,7 @@ module.exports = async (req, res) => {
         }
       } else {
         if (workspace.administrators.indexOf(req.user.user._id) > -1) {
-          const task = createTask();
+          const task = await createTask();
 
           res.json(new ResponseMessage(200, { task }));
         } else {

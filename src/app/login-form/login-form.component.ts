@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FormsService } from '../forms.service';
-import { AccountsService } from '../accounts.service';
+import { FormService } from '../form.service';
+import { AccountService } from '../account.service';
 import { Router } from '@angular/router';
 import { responseMessage } from '../app.component';
 
@@ -13,14 +13,14 @@ import { responseMessage } from '../app.component';
 export class LoginFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
-    private formsService: FormsService,
-    private accountsService: AccountsService,
+    private formService: FormService,
+    private accountService: AccountService,
     private router: Router
   ) {}
 
   loginForm: FormGroup;
 
-  ngOnInit(): void {
+  async ngOnInit() {
     const emailRegex = '[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}';
     this.loginForm = this.fb.group({
       email: [
@@ -34,7 +34,7 @@ export class LoginFormComponent implements OnInit {
     });
   }
 
-  // Getter Functions For Easier Accessibility Throught The Template
+  // Getter Functions For Easier Accessibility Throughout The Template
 
   get email() {
     return this.loginForm.get('email');
@@ -45,7 +45,7 @@ export class LoginFormComponent implements OnInit {
   }
 
   checkEmailAvailability() {
-    return this.accountsService.checkEmailAvailability('login');
+    return this.accountService.checkEmailAvailability('login');
   }
 
   // Form Submit Function
@@ -55,7 +55,7 @@ export class LoginFormComponent implements OnInit {
     this.loginForm.markAllAsTouched();
     // Checking If Login Was successful Only If The Form Is Valid
     if (this.loginForm.valid) {
-      const result: responseMessage = await this.formsService.login(
+      const result: responseMessage = await this.formService.login(
         this.loginForm.value
       );
 
@@ -67,6 +67,10 @@ export class LoginFormComponent implements OnInit {
       } else {
         // If The Login Is successful, Set The Token To The Local Storage
         localStorage.setItem('token', result.data.token);
+
+        // Set The User In The State Store
+        await this.accountService.setUserState();
+
         // Navigate To The Root Page
         this.router.navigate(['']);
       }

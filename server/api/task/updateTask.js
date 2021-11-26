@@ -9,12 +9,17 @@ module.exports = async (req, res) => {
   if (req.body) {
     const name = req.body.name;
     const description = req.body.description;
-
-    // TODO: Check For Workspace Settings
+    const startingDate = req.body.startingDate;
+    const dueDate = req.body.dueDate;
 
     if (
       (await Workspace.findOne({
         _id: workspaceId,
+        administrators: req.user.user._id,
+      })) != null ||
+      (await Task.findOne({
+        _id: taskId,
+        parentId: null,
         administrators: req.user.user._id,
       })) != null
     ) {
@@ -23,6 +28,8 @@ module.exports = async (req, res) => {
         {
           name,
           description,
+          startingDate,
+          dueDate,
         },
         { returnOriginal: false }
       );

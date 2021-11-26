@@ -1,4 +1,5 @@
 const Task = require("../../models/database/task");
+const Workspace = require("../../models/database/workspace");
 const ResponseMessage = require("../../models/responseMessage");
 
 module.exports = async (req, res) => {
@@ -6,6 +7,10 @@ module.exports = async (req, res) => {
   const { taskId } = req.params;
 
   if (
+    (await Workspace.findOne({
+      _id: workspaceId,
+      administrators: req.user.user._id,
+    })) != null ||
     (await Task.findOne({
       _id: taskId,
       workspaceId,

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../account.service';
 import { Router } from '@angular/router';
+import { AccountService } from '../account.service';
 
 @Component({
-  selector: 'app-root-page',
-  templateUrl: './root-page.component.html',
-  styleUrls: ['./root-page.component.scss'],
+  selector: 'app-account-page',
+  templateUrl: './account-page.component.html',
+  styleUrls: ['./account-page.component.scss'],
 })
-export class RootPageComponent implements OnInit {
+export class AccountPageComponent implements OnInit {
   constructor(private accountService: AccountService, private router: Router) {}
 
   async ngOnInit(): Promise<void> {

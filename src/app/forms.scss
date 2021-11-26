@@ -1,15 +1,16 @@
-.form-box {
+.si-form-box {
   max-width: 630px;
   display: flex;
 
   h1,
   span {
-    font-size: 20pt;
-    font-family: "Satoshi Medium";
+    font-size: 28pt;
+    font-family: "Satoshi Black";
     font-weight: unset;
-    color: #999a9b;
+    color: var(--si-heading-color);
     text-align: center;
     margin: 0 auto;
+    width: 450px;
   }
 
   form {
@@ -20,26 +21,22 @@
     font-family: "Satoshi Regular" !important;
 
     label {
-      color: rgba(0, 0, 0, 0.5);
+      color: var(--si-text-color);
       margin-top: 30px;
       font-family: inherit;
+      font-family: "Satoshi Medium";
       // font-weight: 900;
     }
 
     input {
-      padding: 10px 0;
-      border-bottom: 2px solid #cdcfd3;
-      border-image-slice: 1;
+      padding: 10px 15px;
       font-size: 15px;
       margin: 10px 0;
-      color: #8c8e91;
-      font-family: inherit;
+      color: var(--si-input-color);
+      background-color: #ecf2f7;
+      border-radius: 5px;
       transition: border-color 0.2s ease-in-out;
       letter-spacing: 1.2px;
-
-      &:focus {
-        border-bottom: 2px solid black;
-      }
     }
 
     > div {
@@ -51,87 +48,62 @@
       }
     }
 
-    .form__buttons {
-      margin: 40px 0;
+    .si-form-actions {
       display: flex;
-      justify-content: space-around;
-
-      button {
-        padding: 15px;
-        border-radius: 5px;
-        color: #fff;
-        font-size: 12pt;
-        width: 30%;
-        cursor: pointer;
-        font-family: inherit;
-        font-weight: bold;
-
-        &.active-button {
-          background: linear-gradient(
-            135deg,
-            #f6d242 10%,
-            #ff52e5 100%
-          ) !important;
-          box-shadow: 0px 6px 30px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        &.secondary-button {
-          border: 2px solid #cdcfd3;
-          color: #4f4f4f;
-          margin-left: 30px;
-        }
-      }
-    }
-
-    .social__buttons {
-      .facebook__button {
-        background: #3b5998;
-      }
-
-      .google__button {
-        background: #c44129;
-        margin-left: 30px;
-      }
-    }
-
-    .slash {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      font-size: 18pt;
-      font-weight: bold;
-      color: #cdcfd3;
-    }
-
-    .form__actions {
-      margin-top: 40px;
-      display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
+      margin-top: 20px;
 
-      span {
-        color: #4f4f4f;
-        font-size: 12pt;
-        cursor: pointer;
+      > div {
+        color: var(--si-text-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Satoshi Medium";
 
-        &:hover {
-          text-decoration: underline;
+        label {
+          margin: 0;
+          padding-left: 10px;
         }
       }
+
+      a {
+        color: var(--si-blue-color);
+        font-family: "Satoshi Medium";
+        margin-left: 10px;
+      }
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      font-size: 15px;
+      margin-top: 20px;
+      cursor: pointer;
+      color: #fff;
+      border-radius: 5px;
+      font-family: "Satoshi Medium";
+      background: var(--si-blue-color);
     }
   }
 
-  .input-group {
+  .si-input-group {
     display: flex;
     flex-direction: column;
   }
 
-  .columns-2 {
+  .si-columns-2 {
     display: flex;
     justify-content: space-between;
 
-    .input-group {
+    .si-input-group {
       width: calc(50% - 10px);
     }
+  }
+}
+
+@media (max-width: 979px) {
+  .si-form-box h1 {
+    width: unset;
   }
 }

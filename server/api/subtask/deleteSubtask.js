@@ -1,4 +1,5 @@
 const Task = require("../../models/database/task");
+const Workspace = require("../../models/database/workspace");
 const ResponseMessage = require("../../models/responseMessage");
 
 module.exports = async (req, res) => {
@@ -7,10 +8,20 @@ module.exports = async (req, res) => {
   const { subtaskId } = req.params;
 
   if (
+    (await Workspace.findOne({
+      _id: workspaceId,
+      administrators: req.user.user._id,
+    })) != null ||
     (await Task.findOne({
       _id: subtaskId,
       workspaceId,
       parentId: taskId,
+      administrators: req.user.user._id,
+    })) != null ||
+    (await Task.findOne({
+      _id: subtaskId,
+      parentId: taskId,
+      workspaceId,
       administrators: req.user.user._id,
     })) != null
   ) {

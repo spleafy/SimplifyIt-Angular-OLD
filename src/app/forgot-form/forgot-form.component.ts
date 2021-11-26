@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { responseMessage } from '../app.component';
-import { FormsService } from '../forms.service';
-import { AccountsService } from '../accounts.service';
+import { AccountService } from '../account.service';
 
 @Component({
   selector: 'si-forgot-form',
@@ -13,14 +12,13 @@ import { AccountsService } from '../accounts.service';
 export class ForgotFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
-    private formsService: FormsService,
     private router: Router,
-    private accountsService: AccountsService
+    private accountService: AccountService
   ) {}
 
   forgotForm: FormGroup;
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     const emailRegex = '[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}';
     this.forgotForm = this.fb.group({
       email: [
@@ -38,7 +36,7 @@ export class ForgotFormComponent implements OnInit {
   }
 
   checkEmailAvailability() {
-    return this.accountsService.checkEmailAvailability('login');
+    return this.accountService.checkEmailAvailability('login');
   }
 
   // Form Submit Function
@@ -48,7 +46,7 @@ export class ForgotFormComponent implements OnInit {
     this.forgotForm.markAllAsTouched();
     // Checking If Login Was successful Only If The Form Is Valid
     if (this.forgotForm.valid) {
-      const result: responseMessage = await this.accountsService.sendEmail(
+      const result: responseMessage = await this.accountService.sendEmail(
         this.forgotForm.value
       );
 

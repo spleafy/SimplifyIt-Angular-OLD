@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { User } from './app.component';
+// import { User } from './store/models/user.model';
 import { requestPrefix } from './app.component';
 import { responseMessage } from './app.component';
 import { AbstractControl } from '@angular/forms';
@@ -8,7 +9,7 @@ import { AbstractControl } from '@angular/forms';
 @Injectable({
   providedIn: 'root',
 })
-export class FormsService {
+export class FormService {
   constructor(private http: HttpClient) {}
 
   createFormData = (obj: any) => {

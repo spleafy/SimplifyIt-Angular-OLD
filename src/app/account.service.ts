@@ -1,17 +1,26 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AbstractControl } from '@angular/forms';
-import { of } from 'rxjs';
 import { requestPrefix } from './app.component';
 import { responseMessage } from './app.component';
-import { FormsService } from './forms.service';
+import { FormService } from './form.service';
+
+// Store
+import { Store } from '@ngrx/store';
+import { AppState } from './store/app.state';
+import * as UserActions from './store/actions/user.action';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AccountsService {
-  constructor(private http: HttpClient, private formsService: FormsService) {}
+export class AccountService {
+  constructor(
+    private http: HttpClient,
+    private formService: FormService,
+    private store: Store<AppState>
+  ) {}
 
+  // A Function To Create Form Data From An Object
   createFormData = (obj: any) => {
     const formData = new FormData();
     Object.keys(obj).forEach((key) => {
@@ -29,14 +38,20 @@ export class AccountsService {
     path: string,
     regex?: any
   ) {
+    // Describing The Request Function
     let request = () => {
+      // Return A Promise To Make It Async
       return new Promise((resolve, reject) => {
+        // Wrap In Try Catch Block For Error Handling
         try {
+          // If The Timeout Isn't finished, Clear It On The Next Function Call
           if (this.requestTimeout != null) {
             clearTimeout(this.requestTimeout);
           }
+          // Set A Timeout So The Request Isn't Called On Every Keydown Event
           this.requestTimeout = setTimeout(() => {
             // Request Params
+            // Create The HttpParams For The Request
             const params = new HttpParams().set(
               fieldName,
               fieldValue.toLowerCase()
@@ -45,6 +60,7 @@ export class AccountsService {
             this.http
               .get(requestPrefix + path, { params })
               .subscribe((data?: responseMessage) => {
+                // Resolving The Data
                 resolve(data);
               });
           }, 500);
@@ -67,10 +83,15 @@ export class AccountsService {
 
   // Function To Check Email Availability
   checkEmailAvailability(caller: string) {
+    // Return The Abstract Control Function For Angular Custom Validators
     return (control: AbstractControl) => {
+      // Return A Promise, To Make It Async
       return new Promise(async (resolve, reject) => {
+        // Wrap In Try Catch Block For Error Handling
         try {
-          const controlName = this.formsService.getControlFieldName(control);
+          // Get The Name Of The Control, That Calls This Validator
+          const controlName = this.formService.getControlFieldName(control);
+          // Check The Database Existence
           const response: responseMessage = await this.checkDatabaseExistence(
             controlName.toString(),
             control.value,
@@ -78,6 +99,7 @@ export class AccountsService {
             /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
           );
           if (caller == 'login') {
+            // Resolve A Different Result Based On The Caller
             resolve(
               response.data?.registered ? null : { emailNotRegistered: true }
             );
@@ -95,10 +117,15 @@ export class AccountsService {
 
   // Check Username Availability
   checkUsernameAvailability() {
+    // Return The Abstract Control Function For Angular Custom Validators
     return (control: AbstractControl) => {
+      // Return A Promise To Make It Async
       return new Promise(async (resolve, reject) => {
+        // Wrap In Try Catch Block For Error Handling
         try {
-          const controlName = this.formsService.getControlFieldName(control);
+          // Get The Control Name Of The Control
+          const controlName = this.formService.getControlFieldName(control);
+          // Check The Database Existence
           const response: responseMessage = await this.checkDatabaseExistence(
             controlName.toString(),
             control.value,
@@ -106,6 +133,7 @@ export class AccountsService {
             /^[a-zA-Z0-9_]*$/
           );
 
+          // Resolve The Data
           resolve(
             response.data.registered ? { usernameRegistered: true } : null
           );
@@ -135,18 +163,57 @@ export class AccountsService {
   }
 
   // Check User State
-  checkUserState() {
+  setUserState() {
+    // Return A Promise To Make The Function Async, Because We Are Making A Request Which We Will Have To await
     return new Promise((resolve, reject) => {
+      // Wrap In Try Catch Block For Error Handling
       try {
+        // Get The Token From The LocalStorage
         const token = localStorage.getItem('token');
         // Making The Request To The Backend
         this.http
-          .get(requestPrefix + 'api/user/checkUserState', {
+          .get(requestPrefix + 'api/user/getUserState', {
             headers: { Authorization: 'Bearer ' + token },
           })
           .subscribe((data?: responseMessage) => {
+            // If The User Is Logged In Set The User In The NgRx Store
+            if (data.status == 200) {
+              this.store.dispatch(UserActions.setUser({ payload: data.data }));
+            }
+            // Return The User
             resolve(data);
           });
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  getUserState() {
+    // Return A Promise To Make It Async
+    return new Promise((resolve, reject) => {
+      // Wrap In Try Catch Block For Error Handling
+      try {
+        // Select The User From The NgRx Store
+        this.store.select('user').subscribe(async (data) => {
+          // If The User Is An Empty Object(The Initial Value)
+          if (Object.keys(data[0]).length <= 0) {
+            // Then Get The User From The Backend And Set It
+            await this.setUserState();
+
+            try {
+              // Select The User From The Store After Setting It
+              this.store.select('user').subscribe((data) => {
+                // Return The User
+                resolve(data);
+              });
+            } catch (err) {
+              reject(err);
+            }
+          } else {
+            resolve(data);
+          }
+        });
       } catch (err) {
         reject(err);
       }

@@ -1,0 +1,32 @@
+.si-account-page {
+  display: flex;
+  height: 100vh;
+
+  .si-account-page__form {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .si-account-page__image {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 70%;
+    }
+  }
+
+  @media (max-width: 979px) {
+    .si-account-page__form {
+      width: 100%;
+    }
+
+    .si-account-page__image {
+      display: none;
+    }
+  }
+}

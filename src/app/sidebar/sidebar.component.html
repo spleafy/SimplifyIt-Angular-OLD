@@ -1,44 +1,89 @@
-<div class="si-sidebar" [ngClass]="{ 'si-sidebar_extended': extendedSidebar }">
-  <div class="si-sidebar__content">
-    <div class="si-sidebar__top-actions">
-      <div class="si-sidebar__account-box">
-        <div class="si-sidebar__account-profile-picture">
-          <img
-            src="{{ user.settings.profilePicturePath }}"
-            alt=""
-            *ngIf="user.settings.profilePicturePath"
-          />
-          <span
-            class="default-profile-picture"
-            *ngIf="!user.profilePicture"
-            [ngStyle]="{ 'background-color': user.settings.profileColor }"
-          >
-            {{ user.name[0] }}
-          </span>
-        </div>
-        <span>{{ user.name }}</span>
-      </div>
-      <div
-        class="si-sidebar__extend-button"
-        (click)="extendedSidebar = !extendedSidebar"
-      >
-        <img src="../../assets/icons/chevrons-right.svg" alt="" />
-      </div>
+<div class="si-sidebar">
+  <div class="si-sidebar-items">
+    <div class="si-sidebar-item si-tooltip" [attr.data-tooltip]="['Dashboard']">
+      <ng-icon
+        name="hero-view-grid"
+        size="{{ iconSize }}px"
+        color="var(--si-sidebar-icons-color)"
+      ></ng-icon>
     </div>
-    <div class="si-sidebar__toggles">
-      <div
-        class="si-sidebar__toggle"
-        [routerLink]="['./dashboard']"
-        routerLinkActive="router-link-active"
-      >
-        Dashboard
-      </div>
-      <div class="si-sidebar__toggle">Notifications</div>
-      <div class="si-sidebar__toggle">
-        Workspaces
-        <img src="../../assets/icons/chevron-right.svg" alt="" />
-      </div>
+    <div
+      class="si-sidebar-item si-tooltip"
+      [attr.data-tooltip]="['Workspaces']"
+    >
+      <ng-icon
+        name="hero-briefcase"
+        size="{{ iconSize }}px"
+        color="var(--si-sidebar-icons-color)"
+      ></ng-icon>
     </div>
-    <div class="si-sidebar__bottom-actions">Logout</div>
+    <div class="si-sidebar-item si-tooltip" [attr.data-tooltip]="['Teams']">
+      <ng-icon
+        name="hero-users"
+        size="{{ iconSize }}px"
+        color="var(--si-sidebar-icons-color)"
+      ></ng-icon>
+    </div>
+    <div class="si-sidebar-item si-tooltip" [attr.data-tooltip]="['Messages']">
+      <ng-icon
+        name="hero-paper-airplane"
+        style="transform: rotate(45deg) translate(1px, -2px)"
+        size="{{ iconSize }}px"
+        color="var(--si-sidebar-icons-color)"
+      ></ng-icon>
+    </div>
+    <div class="si-sidebar-item si-tooltip" [attr.data-tooltip]="['Calendar']">
+      <ng-icon
+        name="hero-calendar"
+        size="{{ iconSize }}px"
+        color="var(--si-sidebar-icons-color)"
+      ></ng-icon>
+    </div>
+    <div class="si-sidebar-item si-tooltip" [attr.data-tooltip]="['Analytics']">
+      <ng-icon
+        name="hero-presentation-chart-bar"
+        size="{{ iconSize }}px"
+        color="var(--si-sidebar-icons-color)"
+      ></ng-icon>
+    </div>
+  </div>
+  <si-separator></si-separator>
+
+  <div class="si-sidebar-actions">
+    <div class="si-sidebar-action si-tooltip" [attr.data-tooltip]="['Help']">
+      <ng-icon
+        name="hero-question-mark-circle"
+        size="{{ iconSize }}px"
+        color="var(--si-sidebar-icons-color)"
+      ></ng-icon>
+    </div>
+    <div
+      class="si-sidebar-action si-tooltip"
+      [attr.data-tooltip]="['Toggle Theme']"
+      (click)="toggleTheme()"
+    >
+      <ng-icon
+        name="hero-sun"
+        size="{{ iconSize }}px"
+        *ngIf="darkTheme"
+        color="var(--si-sidebar-icons-color)"
+      ></ng-icon>
+      <ng-icon
+        name="hero-moon"
+        size="{{ iconSize }}px"
+        *ngIf="!darkTheme"
+        color="var(--si-sidebar-icons-color)"
+      ></ng-icon>
+    </div>
+    <div
+      class="si-sidebar-action si-tooltip"
+      [attr.data-tooltip]="['Settings']"
+    >
+      <ng-icon
+        name="hero-cog"
+        size="{{ iconSize }}px"
+        color="var(--si-sidebar-icons-color)"
+      ></ng-icon>
+    </div>
   </div>
 </div>

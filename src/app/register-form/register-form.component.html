@@ -1,5 +1,5 @@
-<div class="form-box">
-  <div [ngStyle]="{ padding: '40px' }">
+<div class="si-form-box">
+  <div [ngStyle]="{ padding: '70px' }">
     <h1>Welcome 👋! Fill the fields bellow, to register.</h1>
     <form
       action=""
@@ -8,8 +8,8 @@
       (ngSubmit)="registerFormSubmit()"
       novalidate
     >
-      <div class="columns-2">
-        <div class="input-group">
+      <div class="si-columns-2">
+        <div class="si-input-group">
           <label for="name">Name: </label>
           <input type="text" id="name" formControlName="name" />
           <div [hidden]="name.valid || name.untouched">
@@ -17,7 +17,7 @@
             <div *ngIf="name.errors?.pattern">This is not a valid name!</div>
           </div>
         </div>
-        <div class="input-group">
+        <div class="si-input-group">
           <label for="username">Username: </label>
           <input type="text" id="username" formControlName="username" />
           <div [hidden]="username.valid || username.untouched">
@@ -53,8 +53,8 @@
         </div>
         <div *ngIf="email.pending">wait...</div>
       </div>
-      <div class="columns-2">
-        <div class="input-group">
+      <div class="si-columns-2">
+        <div class="si-input-group">
           <label for="password">Password: </label>
           <input type="password" id="password" formControlName="password" />
           <div [hidden]="password.valid || password.untouched">
@@ -64,7 +64,7 @@
             </div>
           </div>
         </div>
-        <div class="input-group">
+        <div class="si-input-group">
           <label for="repassword">Confirm Password: </label>
           <input type="password" id="repassword" formControlName="repassword" />
           <div [hidden]="repassword.valid || repassword.untouched">
@@ -77,20 +77,12 @@
           </div>
         </div>
       </div>
-      <div class="form__buttons">
-        <button class="active-button">Register</button>
-        <button
-          class="secondary-button"
-          [routerLink]="['../login']"
-          routerLinkActive="router-link-active"
-        >
-          Login
-        </button>
-      </div>
-      <div class="slash">\</div>
-      <div class="form__buttons social__buttons">
-        <button class="facebook__button">Facebook</button>
-        <button class="google__button">Google</button>
+      <button>Register</button>
+      <div class="si-form-actions">
+        <div>
+          Already have an account?
+          <a [routerLink]="['../login']">Login Now</a>
+        </div>
       </div>
     </form>
   </div>

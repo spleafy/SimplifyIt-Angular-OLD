@@ -7,12 +7,13 @@ import { Component } from '@angular/core';
 export class AppComponent {
   constructor() {}
 }
+
 export type User = {
-  name?: string;
-  username?: string;
-  email?: string;
-  password?: string;
-  repassword?: string;
+  email: string;
+  username: string;
+  password: string;
+  repassword: string;
+  name: string;
 };
 
 export type responseMessage = {

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
 @font-face {
   font-family: "Gotham Light";
   src: url("./assets/fonts/GothamPro-Light.ttf");
@@ -79,10 +81,38 @@
 }
 
 * {
-  font-family: "Satoshi Regular";
+  font-family: "Satoshi Regular", "Proxima Nova Regular", "Gotham Regular",
+    "Roboto";
   margin: 0;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  overflow-y: hidden;
+  background-color: var(--si-body-background-color);
+
+  &.si-light-theme {
+    --si-sidebar-icons-color: rgb(68, 68, 73);
+    --si-sidebar-border-color: rgb(238, 238, 238);
+    --si-sidebar-background-color: rgb(252, 252, 252);
+    --si-hover-background-color: rgb(238, 238, 238);
+    --si-tooltip-background-color: #fff;
+    --si-tooltip-text-color: #616069;
+    --si-body-background-color: #fff;
+    --si-sidebar-sidebar-background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  &.si-dark-theme {
+    --si-sidebar-icons-color: #fff;
+    --si-sidebar-border-color: #494d53;
+    --si-sidebar-background-color: #2f3136;
+    --si-hover-background-color: rgb(70, 72, 80);
+    --si-tooltip-background-color: rgb(70, 72, 80);
+    --si-tooltip-text-color: rgb(226, 226, 226);
+    --si-body-background-color: #36393f;
+    --si-sidebar-sidebar-background-color: rgba(0, 0, 0, 0.2);
+  }
 }
 
 input,
@@ -95,4 +125,50 @@ button {
 
 a {
   color: inherit;
+}
+
+.si-tooltip {
+  position: relative;
+
+  &::after {
+    content: attr(data-tooltip);
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.1);
+    display: none;
+    position: absolute;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: var(--si-tooltip-text-color);
+    white-space: nowrap;
+    background: var(--si-tooltip-background-color);
+  }
+
+  &:hover {
+    &::after {
+      display: block;
+      animation: slideIn 0.2s ease-in-out forwards;
+    }
+
+    @keyframes slideIn {
+      from {
+        left: 45px;
+      }
+
+      to {
+        left: 50px;
+      }
+    }
+  }
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--si-dark-gray-color);
+  border-radius: 2.5px;
+}
+
+::placeholder {
+  color: var(--si-input-color);
 }

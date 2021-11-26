@@ -8,12 +8,34 @@ import { AppComponent } from './app.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
-import { AccountsPageComponent } from './accounts-page/accounts-page.component';
 import { ApplicationPageComponent } from './application-page/application-page.component';
 import { ForgotFormComponent } from './forgot-form/forgot-form.component';
 import { RootPageComponent } from './root-page/root-page.component';
+import { AccountPageComponent } from './account-page/account-page.component';
+
+// Store
+import { StoreModule } from '@ngrx/store';
+import { userReducer } from './store/reducers/user.reducer';
+
+// Icons
+import { NgIconsModule } from '@ng-icons/core';
+import {
+  HeroUsers,
+  HeroPlus,
+  HeroSun,
+  HeroHome,
+  HeroBriefcase,
+  HeroChat,
+  HeroCog,
+  HeroMoon,
+  HeroCalendar,
+  HeroViewGrid,
+  HeroPresentationChartBar,
+  HeroQuestionMarkCircle,
+  HeroPaperAirplane,
+} from '@ng-icons/heroicons';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
+import { SeparatorComponent } from './separator/separator.component';
 
 @NgModule({
   declarations: [
@@ -21,18 +43,36 @@ import { DashboardPageComponent } from './dashboard-page/dashboard-page.componen
     NotFoundPageComponent,
     LoginFormComponent,
     RegisterFormComponent,
-    AccountsPageComponent,
     ApplicationPageComponent,
     ForgotFormComponent,
     RootPageComponent,
+    AccountPageComponent,
     SidebarComponent,
-    DashboardPageComponent,
+    SeparatorComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    StoreModule.forRoot({
+      user: userReducer,
+    }),
+    NgIconsModule.withIcons({
+      HeroUsers,
+      HeroPlus,
+      HeroSun,
+      HeroHome,
+      HeroBriefcase,
+      HeroChat,
+      HeroCog,
+      HeroMoon,
+      HeroCalendar,
+      HeroViewGrid,
+      HeroPresentationChartBar,
+      HeroQuestionMarkCircle,
+      HeroPaperAirplane,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

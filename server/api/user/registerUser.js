@@ -1,4 +1,5 @@
 const User = require("../../models/database/user");
+const Workspace = require("../../models/database/workspace");
 const bcrypt = require("bcrypt");
 const ResponseMessage = require("../../models/responseMessage");
 const jwt = require("jsonwebtoken");
@@ -24,6 +25,14 @@ module.exports = async (req, res) => {
 
   try {
     const user = await new User(requestData).save();
+    const workspace = await Workspace({
+      administrators: [user._id.toString()],
+      users: [user._id.toString()],
+      name: user.username + "'s workspace",
+      settings: {
+        allowUsersToCreate: false,
+      },
+    }).save();
     const token = jwt.sign({ user }, process.env.TOKEN_SECRET);
     res.json(new ResponseMessage(200, { successful: true, token }));
   } catch (err) {
